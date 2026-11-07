@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  # --- SERVIÇO DE BANCO DE DADOS ---
+  db:
+    build: ./database
+    container_name: container_banco
+    restart: always
+    environment:
+      POSTGRES_DB: meubanco
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456
+    ports:
+      - "5432:5432"
+
+  # --- SERVIÇO DE BACKEND ---
+  backend:
+    build: ./backend
+    container_name: container_backend
+    restart: always
+    environment:
+      DB_HOST: db            # O hostname é exatamente o nome do serviço acima!
+      DB_NAME: meubanco
+      DB_USER: postgres
+      DB_PASSWORD: 123456
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db                   # Avisa ao Docker que o backend só deve subir após o banco iniciar
+
+  # --- SERVIÇO DE FRONTEND ---
+  frontend:
+    build: ./frontend
+    container_name: container_frontend
+    restart: always
+    ports:
+      - "8080:80"            # Mapeia a porta 8080 do seu computador para a porta 80 interna do container
+    depends_on:
+      - backend
