@@ -3,20 +3,41 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cadastro de Usuários</title>
+  <title>Gerenciamento de Usuários</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="container">
-    <h2>Cadastrar Usuário</h2>
+    <h2 id="formTitle">Cadastrar Usuário</h2>
     <form id="userForm">
-      <input type="text" id="nome" placeholder="Nome" required>
-      <input type="email" id="email" placeholder="E-mail" required>
-      <button type="submit">Enviar</button>
+      <input type="hidden" id="userId">
+      <div class="input-group">
+        <input type="text" id="nome" placeholder="Nome completo" required>
+        <input type="email" id="email" placeholder="E-mail" required>
+      </div>
+      <div class="button-group">
+        <button type="submit" id="submitBtn">Cadastrar</button>
+        <button type="button" id="cancelBtn" class="btn-cancel" style="display: none;">Cancelar</button>
+      </div>
     </form>
 
+    <div id="feedbackMsg" class="feedback"></div>
+
     <h2>Usuários Cadastrados</h2>
-    <ul id="userList"></ul>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>E-mail</th>
+            <th class="col-actions">Ações</th>
+          </tr>
+        </thead>
+        <tbody id="userTableBody">
+          <!-- Linhas inseridas via JS -->
+        </tbody>
+      </table>
+    </div>
   </div>
 
   <script src="script.js"></script>
